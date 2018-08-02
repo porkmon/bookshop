@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.pork.dao.UserDao">
+	<resultMap type="User" id="userResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="password" property="password"/>
+		<result column="phone" property="phone"/>
+		<result column="email" property="email"/>
+	</resultMap>
+	<sql id="column">
+		id,name,password,phone,email
+	</sql>
+	<insert id="insertOne" parameterType="User">
+		insert into users (<include refid="column"/>) values 
+			(#{id},#{name},#{password},#{phone},#{email});
+	</insert>
+	<select id="selectByName" resultMap="userResultMap" parameterType="String">
+		select <include refid="column"/> from users where name=#{name};
+	
+	</select>
+	<select id="selectOne" parameterType="String" resultMap="userResultMap">
+		select * from users where id=#{id};
+	</select>
+	<select id="selectAll" resultMap="userResultMap">
+		select <include refid="column"/> from books;
+	</select>
+	<!-- <select id="selectList" resultMap="bookResultMap" parameterType="String">
+		select <include refid="column"/> from books where id in (select bookid from booktype where typeid=#{typeId} );
+	</select> -->
+</mapper>

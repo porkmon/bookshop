@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		
+		<!-- <typeAlias type="cn.pork.entity.Book" alias="Book" /> -->
+		<package name="cn.pork.entity" />
+	</typeAliases>
+
+	<mappers>
+	   	<!-- <package name="mapper" /> -->
+		<mapper resource="mapper/BookMapper.xml" />
+		<mapper resource="mapper/TypeMapper.xml" />
+		<mapper resource="mapper/UserMapper.xml" />
+		
+	</mappers>
+
+</configuration>

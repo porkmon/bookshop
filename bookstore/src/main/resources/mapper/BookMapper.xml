@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.pork.dao.BookDao">
+	<resultMap type="Book" id="bookResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="auth" property="auth"/>
+		<result column="img" property="img"/>
+		<result column="rebate" property="rebate"/>
+		<result column="stock" property="stock"/>
+		<result column="publisher" property="publisher"/>
+		<result column="publishdate" property="publishdate"/>
+		<result column="pages" property="pages"/>
+		<result column="size" property="size"/>
+		<result column="printtimes" property="printtimes"/>
+		<result column="versions" property="versions"/>
+		<result column="brief" property="brief"/>
+		<result column="content" property="content"/>
+		<!-- <collection property="types" ofType="Type" resultMap="cn.pork.dao.TypeDao.typeResultMap"></collection> -->
+	</resultMap>
+	<sql id="column">
+		id,name,price,auth,img,rebate,stock,publisher,publishdate,pages,size,printtimes,versions,brief,content
+	</sql>
+	<insert id="insertOne" parameterType="Book">
+		insert into books(<include refid="column"/>) values 
+			(#{id},#{name},#{price},#{auth},#{img},#{rebate},#{stock},#{publisher},#{publishdate},#{pages},#{size},#{printtimes},#{versions},#{brief},#{content});
+	</insert>
+	<select id="selectOne" parameterType="String" resultMap="bookResultMap">
+		select <include refid="column"/> from books where id=#{id};
+	</select>
+	<select id="selectAll" resultMap="bookResultMap">
+		select <include refid="column"/> from books;
+	</select>
+	<select id="selectList" resultMap="bookResultMap" parameterType="String">
+		select <include refid="column"/> from books where id in (select bookid from booktype where typeid=#{typeId} );
+	</select>
+</mapper>
