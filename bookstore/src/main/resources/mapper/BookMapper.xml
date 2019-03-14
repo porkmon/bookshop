@@ -35,7 +35,12 @@
 	<select id="selectList" resultMap="bookResultMap" parameterType="String">
 		select <include refid="column"/> from books where id in (select bookid from booktype where typeid=#{typeId} );
 	</select>
+
 	<sql id="fuck">
 		fuck fuck fuck 
+	</sql>
+	<sql id="fuck you ">
+		fuck you 
+
 	</sql>
 </mapper>
