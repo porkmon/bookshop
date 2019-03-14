@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.pork.dao.OrderDao">
+	<resultMap type="Orders" id="orderResultMap">
+		<id column="id" property="id"/>
+		<result column="userid" property="userId"/>
+		<result column="consignee" property="consignee"/>
+		<result column="paytype" property="paytype"/>
+		<result column="amt" property="amt"/>
+		<result column="state" property="state"/>
+		<result column="orderdate" property="orderdate"/>
+		<!-- <collection property="types" ofType="Type" resultMap="cn.pork.dao.TypeDao.typeResultMap"></collection> -->
+	</resultMap>
+	<sql id="column">
+		id,userid,consignee,paytype,amt,state,orderdate
+	</sql>
+	<insert id="insertOne" parameterType="Orders">
+		insert into orders(<include refid="column"/>) values 
+			(#{id},#{userId},#{consignee},#{paytype},#{amt},#{state},#{orderdate});
+	</insert>
+	<select id="selectAll" resultMap="orderResultMap">
+		select <include refid="column"/> from orders;
+	</select>
+	<delete id="deleteOne" parameterType="String">
+		delete FROM orders WHERE id=#{id};
+	</delete>
+	
+	<select id="selectOne" parameterType="String" resultMap="orderResultMap">
+		select <include refid="column"/> from orders where id=#{id};
+	</select>
+	<!-- 
+	<select id="selectList" resultMap="bookResultMap" parameterType="String">
+		select <include refid="column"/> from books where id in (select bookid from booktype where typeid=#{typeId} );
+	</select> -->
+</mapper>

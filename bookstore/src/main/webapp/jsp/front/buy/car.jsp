@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
@@ -8,7 +9,7 @@
   	<script type="text/javascript">
   		var path = "${pageContext.request.contextPath}";
   	</script>
-  	<script type="text/javascript" src="${pageContext.request.contextPath }/js/car.js"></script>
+  	<script type="text/javascript" src="${pageContext.request.contextPath}/js/car.js"></script>
   	<style type="text/css">
   		*{
   			font-size:10pt;
@@ -44,6 +45,37 @@
   	</style>
   </head>
   <body>
+  <script>
+
+	function _add(id){//所有的操作都必须要先操作Session然后才操作页面数据
+		
+		var url = path+"/front/buy/add.action?id="+id;
+		
+		window.location.href=url;
+	}
+	/**
+	 * 删除一本书
+	 */
+	function _del(id){
+		var url = path+"/front/buy/del.action?id="+id;
+		
+		
+		window.location.href=url;
+		
+	}
+	
+	/**
+	 * 提交生成订单
+	 */
+	function sure(){
+		var tb = document.getElementById("table");
+		if(tb.rows.length<=3){
+			return;
+		}
+		window.location.href=path+"/front/address/list.action";
+	}
+</script>
+
   		<p>以下是你买的所有图书-><font color="red" style="font:bold;">订单明细</font>-->选择/添加收货地址->确认订单->网银付款或到货付款->查收货物</p>
   		<table id="table">
   			<tr class="head">
@@ -63,32 +95,37 @@
   					增/删
   				</td>
   			</tr>
+  			<c:forEach items="${bookMap}" var="book">
   				<tr>
+  					
 	  				<td>
-	  					<a href="${pageContext.request.contextPath }/index?action=queryBook&id=${entry.value.id}">
-	  						${entry.value.name}
+	  					<a href="${pageContext.request.contextPath }/index?action=queryBook&id=${book.value.id}">
+	  						${book.value.name}
 	  					</a>
 	  				</td>
 	  				<td>
-	  					${entry.value.currentPrice}
+	  					<fmt:formatNumber value="${book.value.price*book.value.rebate}" pattern="##.##" minFractionDigits="2" />
 	  				</td>
 	  				<td>
-	  					${entry.value.amt}
+	  					${book.value.amt}
 	  				</td>
 	  				<td>
+	  					<fmt:formatNumber value="${book.value.price*book.value.rebate*book.value.amt}" pattern="##.##" minFractionDigits="2" />
+	  					<c:set var="total" value="${total+book.value.price*book.value.rebate*book.value.amt}"></c:set>
 	  				</td>
-	  				<td>
-	  					<input class="oper" type="button"  onclick="_add('${entry.value.id}')" value="+"/>
+	  				<td width="50">
+	  					<input class="oper" type="button"  onclick="_add('${book.value.id}')" value="+"/>
 	  					&nbsp;
-	  					<input class="oper" type="button"  onclick="_del('${entry.value.id}')" value="-"/>
+	  					<input class="oper" type="button"  onclick="_del('${book.value.id}')" value="-"/>
 	  				</td>
+	  				
   				</tr>
-  			
+  			</c:forEach>
   			<tr class="head">
   				<td colspan="5" style="text-align:right;">
   					总金额：
   					<label id="sum">
-  					${sum}
+  					<fmt:formatNumber pattern="#.##" value="${total}"></fmt:formatNumber>
   					</label>
   					元
   				</td>

@@ -2,16 +2,22 @@
 /**
  * 增加一本书
  */
-function _add(id){//所有的操作都必须要先操作Session然后才操作页面数据
-	//alert("===="+id);
-	var url = path+"/buy/buy?action=modifyCar&id="+id+"&num=1";
+
+function add(id){//所有的操作都必须要先操作Session然后才操作页面数据
+	alert("===="+id);
+	var url = path+"/front/buy/add.action?id="+id;
+	alert("111");
+	alert(url);
 	window.location.href=url;
 }
 /**
  * 删除一本书
  */
 function _del(id){
-	var url = path+"/buy/buy?action=modifyCar&id="+id+"&num=-1";
+	var url = path+"/front/buy/del.action?id="+id;
+	alert("111");
+	alert(url);
+	
 	window.location.href=url;
 	
 }

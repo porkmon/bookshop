@@ -25,13 +25,13 @@
   	<p>以下是《${book.name }》的信息</p>
     <table>
     	<tr>
-    		<td style="width:120px;">
-    			<img class="img" src="${book.img }"></img>
+    		<td style="width:120px;"><%-- ${book.img } --%>
+    			<img class="img" src="${pageContext.request.contextPath }/imgs/${book.img }"></img>
     		</td>
     		<td align="left" valign="top">
     			书名：${book.name }<br/>
     				原价：<font style="text-decoration:line-through;">${book.price }元</font><br/>
-    				现价：${book.truePrice}元<br/>
+    				现价：${book.price*book.rebate}元<br/>
     				折扣：${book.rebate }折<br/>
     			作者：${book.auth }<br/>
     			出版：${book.publisher }<br/>
