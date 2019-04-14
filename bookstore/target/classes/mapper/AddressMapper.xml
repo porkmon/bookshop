@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.pork.dao.AddressDao">
+	<resultMap type="Address" id="addressResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="phone" property="phone"/>
+		<result column="zip" property="zip"/>
+		<result column="dft" property="dft"/>
+		<result column="userid" property="userId"/>
+		<result column="mktime" property="mktime"/>
+	</resultMap>
+	<sql id="column">
+		id,name,phone,zip,dft,userid,mktime
+	</sql>
+	<insert id="insertOne" parameterType="Book">
+		insert into address(<include refid="column"/>) values 
+			(#{id},#{name},#{phone},#{zip},#{dft},#{userId},#{mktime});
+	</insert>
+	<delete id="deleteOne" parameterType="String">
+		delete FROM address WHERE id=#{id};
+	</delete>
+	<!-- 
+	<select id="selectOne" parameterType="String" resultMap="bookResultMap">
+		select <include refid="column"/> from books where id=#{id};
+	</select> 
+	<select id="selectAll" resultMap="addressResultMap">
+		select <include refid="column"/> from books;
+	</select>-->
+	<select id="selectList" resultMap="addressResultMap" parameterType="String">
+		select <include refid="column"/> from address where userid =#{userId};
+	</select>
+	<update id="chgDftTo0">
+		update address set dft=0 where dft=1;
+	</update>
+	<update id="chgDftTo1" parameterType="String">
+		update address set dft=1 where id=#{id}
+	</update>
+</mapper>

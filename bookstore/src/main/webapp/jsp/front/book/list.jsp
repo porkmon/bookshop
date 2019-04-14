@@ -32,13 +32,13 @@
 	<c:forEach items="${bookList }" var="book">
   		<div class="div" onmousemove="divin(this);" onmouseout="divout(this);">
   			<a href="${pageContext.request.contextPath }/front/book/detail.action?bookId=${book.id}">
-  				<img class="img" src="${book.img }"></img>
+  				<img class="img" src="${pageContext.request.contextPath }/imgs/${book.img }"></img>
   			</a>
   			<br/>
   			${book.name }
   			<br/>
   			<font style="text-decoration:line-through;">${book.price }元</font>
-  			<font style="color:red;">${book.truePrice }</font>
+  			<font style="color:red;">${book.price*book.rebate}</font>
   		</div>
 	</c:forEach>
 

@@ -73,9 +73,9 @@
      								欢迎你：
      								<a href="#">${user.name}</a>
      								|
-     								<a target="_content" href="order/list.html">订单管理</a>
+     								<a target="_content" href="${pageContext.request.contextPath }/front/order/list.action">订单管理</a>
      								|
-     								<a target="_content" href="buy/car.html">查看购物车</a>
+     								<a target="_content" href="${pageContext.request.contextPath }/front/buy/car.action?bookId=null">查看购物车</a>
      							</c:otherwise>
      						</c:choose>
      					</td>
@@ -86,13 +86,13 @@
      	<tr id="content">
      		<td style="width:120px;vertical-align:top;padding:10px;">
      			<div class="menu" onmousemove="chg(this);" onmouseout="_chg(this);">
-     					<a target="_content" href="book/list.jsp" class="type">
+     					<a target="_content" href="${pageContext.request.contextPath}/front/book/list.action" class="type">
      						全部
      					</a>
      			</div>
      			<c:forEach items="${typeList}" var="type">
    					<div class="menu" onmousemove="chg(this);" onmouseout="_chg(this);">
-   						<a target="_content" href="jsp/book/list.html" class="type">
+   						<a target="_content" href="${pageContext.request.contextPath}/front/book/list.action?typeId=${type.id }" class="type">
    						${type.name}
    						</a>
    					</div>
